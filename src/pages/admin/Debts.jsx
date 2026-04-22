@@ -1,22 +1,18 @@
 import React from 'react';
-import { base44 } from '@/api/base44Client';
+import { entities } from '@/api/firebase-entities';
 import { useQuery } from '@tanstack/react-query';
 import { Card } from '@/components/ui/card';
 import { AlertTriangle } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 
+const months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+
 export default function Debts() {
   const { data: payments = [] } = useQuery({
     queryKey: ['all-overdue-payments'],
-    queryFn: () => base44.entities.Payment.filter({ status: 'Atrasado' }, '-year', 200),
+    queryFn: () => entities.Payment.filter({ status: 'Atrasado' }, '-created_date', 200),
   });
 
-  const { data: tenants = [] } = useQuery({
-    queryKey: ['tenants'],
-    queryFn: () => base44.entities.Tenant.filter({ status: 'activo' }, '-created_date', 50),
-  });
-
-  // Group debts by tenant
   const debtsByTenant = {};
   payments.forEach(p => {
     if (!debtsByTenant[p.tenant_id]) {
@@ -27,15 +23,10 @@ export default function Debts() {
   });
 
   const debtList = Object.entries(debtsByTenant).sort((a, b) => b[1].total - a[1].total);
-  const months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 
   return (
     <div>
-      <PageHeader 
-        title="Control de Deudas"
-        subtitle={`${debtList.length} inquilino(s) con pagos atrasados`}
-      />
-
+      <PageHeader title="Control de Deudas" subtitle={`${debtList.length} inquilino(s) con pagos atrasados`} />
       {debtList.length === 0 ? (
         <Card className="p-8 text-center">
           <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center mx-auto mb-3">

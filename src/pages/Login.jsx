@@ -65,6 +65,10 @@ export default function Login() {
             {loading ? 'Ingresando...' : 'Ingresar'}
           </Button>
         </form>
+        <p className="text-center text-sm text-gray-500 mt-4">
+          ¿Sos inquilino nuevo?{' '}
+          <a href="/register" className="text-blue-600 font-medium">Creá tu cuenta acá</a>
+        </p>
       </Card>
     </div>
   );

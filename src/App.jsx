@@ -16,6 +16,8 @@ import Payments from '@/pages/admin/Payments';
 import Debts from '@/pages/admin/Debts';
 import Contracts from '@/pages/admin/Contracts';
 import Notifications from '@/pages/admin/Notifications';
+import PendingTenants from '@/pages/admin/PendingTenants';
+import Register from '@/pages/Register';
 
 import MyStatus from '@/pages/tenant/MyStatus';
 import MyPayments from '@/pages/tenant/MyPayments';
@@ -37,10 +39,11 @@ function AppRoutes() {
 
   if (!isAuthenticated) {
     return (
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="*" element={<Navigate to="/login" />} />
-      </Routes>
+     <Routes>
+  <Route path="/login" element={<Login />} />
+  <Route path="/register" element={<Register />} />
+  <Route path="*" element={<Navigate to="/login" />} />
+</Routes>
     );
   }
 
@@ -57,6 +60,7 @@ function AppRoutes() {
           <Route path="/debts" element={<Debts />} />
           <Route path="/contracts" element={<Contracts />} />
           <Route path="/notifications" element={<Notifications />} />
+<Route path="/pending" element={<PendingTenants />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

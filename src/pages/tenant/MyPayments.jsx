@@ -1,6 +1,7 @@
 import React from 'react';
-import { base44 } from '@/api/base44Client';
+import { entities } from '@/api/firebase-entities';
 import { useQuery } from '@tanstack/react-query';
+import { useAuth } from '@/lib/AuthContext';
 import { Card } from '@/components/ui/card';
 import { CreditCard, CheckCircle, Clock, AlertTriangle } from 'lucide-react';
 import StatusBadge from '@/components/StatusBadge';
@@ -9,23 +10,27 @@ import { format } from 'date-fns';
 const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 
 export default function MyPayments() {
-  const { data: user } = useQuery({
-    queryKey: ['me'],
-    queryFn: () => base44.auth.me(),
+  const { user } = useAuth();
+
+  const { data: tenants = [] } = useQuery({
+    queryKey: ['tenant-by-email', user?.email],
+    queryFn: () => entities.Tenant.filter({ email: user.email }),
+    enabled: !!user?.email,
   });
+  const tenant = tenants[0];
 
   const { data: payments = [] } = useQuery({
-    queryKey: ['my-all-payments', user?.tenant_id],
-    queryFn: () => base44.entities.Payment.filter({ tenant_id: user.tenant_id }, '-year', 100),
-    enabled: !!user?.tenant_id,
+    queryKey: ['my-all-payments', tenant?.id],
+    queryFn: () => entities.Payment.filter({ tenant_id: tenant.id }, '-created_date', 100),
+    enabled: !!tenant?.id,
   });
 
-  if (!user?.tenant_id) {
+  if (!tenant) {
     return (
       <div className="text-center py-12">
         <CreditCard className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
         <p className="font-semibold">Sin datos disponibles</p>
-        <p className="text-sm text-muted-foreground mt-1">Tu cuenta aún no está vinculada.</p>
+        <p className="text-sm text-muted-foreground mt-1">Tu cuenta aún no está asignada a una casa.</p>
       </div>
     );
   }
@@ -40,7 +45,6 @@ export default function MyPayments() {
     <div className="space-y-4">
       <h1 className="text-xl font-bold">Mis Pagos</h1>
       <p className="text-sm text-muted-foreground">{payments.length} registros</p>
-
       <div className="space-y-3">
         {payments.sort((a, b) => b.year - a.year || b.month - a.month).map(payment => (
           <Card key={payment.id} className="p-4">
@@ -59,14 +63,10 @@ export default function MyPayments() {
                 <StatusBadge status={payment.status} />
               </div>
             </div>
-            {payment.notes && (
-              <p className="text-xs text-muted-foreground mt-2 pt-2 border-t">{payment.notes}</p>
-            )}
+            {payment.notes && <p className="text-xs text-muted-foreground mt-2 pt-2 border-t">{payment.notes}</p>}
           </Card>
         ))}
-        {payments.length === 0 && (
-          <Card className="p-8 text-center text-muted-foreground">No hay pagos registrados</Card>
-        )}
+        {payments.length === 0 && <Card className="p-8 text-center text-muted-foreground">No hay pagos registrados</Card>}
       </div>
     </div>
   );

@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { 
-  LayoutDashboard, Users, CreditCard, AlertTriangle, 
-  Bell, FileText, Menu, LogOut, Building2
-} from 'lucide-react';
+import { LayoutDashboard, Users, CreditCard, AlertTriangle, Bell, FileText, Menu, LogOut, Building2, UserCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/lib/AuthContext';
 
 const navItems = [
   { path: '/', icon: LayoutDashboard, label: 'Dashboard' },
   { path: '/tenants', icon: Users, label: 'Inquilinos' },
+  { path: '/pending', icon: UserCheck, label: 'Pendientes' },
   { path: '/payments', icon: CreditCard, label: 'Pagos' },
   { path: '/debts', icon: AlertTriangle, label: 'Deudas' },
   { path: '/notifications', icon: Bell, label: 'Notificaciones' },
@@ -47,8 +45,8 @@ export default function AdminLayout() {
                 to={item.path}
                 onClick={() => setSidebarOpen(false)}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                  isActive 
-                    ? 'bg-sidebar-accent text-sidebar-primary' 
+                  isActive
+                    ? 'bg-sidebar-accent text-sidebar-primary'
                     : 'text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent/50'
                 }`}
               >
@@ -59,7 +57,7 @@ export default function AdminLayout() {
           })}
         </nav>
         <div className="p-3 border-t border-sidebar-border">
-          <button 
+          <button
             onClick={logout}
             className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent/50 w-full transition-colors"
           >
