@@ -1,0 +1,26 @@
+{
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "role": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "familia"
+      ],
+      "default": "familia",
+      "description": "Rol del usuario"
+    },
+    "tenant_id": {
+      "type": "string",
+      "description": "ID del inquilino vinculado (solo para rol familia)"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Tel\u00e9fono de contacto"
+    }
+  },
+  "required": [
+    "role"
+  ]
+}

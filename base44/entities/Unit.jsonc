@@ -1,0 +1,34 @@
+{
+  "name": "Unit",
+  "type": "object",
+  "properties": {
+    "number": {
+      "type": "number",
+      "description": "N\u00famero de casa (1 a 11)"
+    },
+    "rent_price": {
+      "type": "number",
+      "description": "Precio de alquiler mensual en pesos argentinos"
+    },
+    "payment_day": {
+      "type": "number",
+      "description": "D\u00eda del mes en que vence el pago (ej: 10)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "ocupada",
+        "disponible"
+      ],
+      "default": "disponible"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Notas o arreglos particulares con el inquilino"
+    }
+  },
+  "required": [
+    "number",
+    "rent_price"
+  ]
+}

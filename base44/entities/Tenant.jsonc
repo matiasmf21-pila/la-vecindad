@@ -1,0 +1,57 @@
+{
+  "name": "Tenant",
+  "type": "object",
+  "properties": {
+    "full_name": {
+      "type": "string",
+      "description": "Nombre completo del titular"
+    },
+    "family_name": {
+      "type": "string",
+      "description": "Nombre de la familia"
+    },
+    "email": {
+      "type": "string",
+      "description": "Email de contacto"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Tel\u00e9fono de contacto"
+    },
+    "unit_id": {
+      "type": "string",
+      "description": "ID de la unidad asignada"
+    },
+    "unit_number": {
+      "type": "number",
+      "description": "N\u00famero de la unidad asignada"
+    },
+    "contract_start": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha de inicio del contrato"
+    },
+    "contract_end": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha de fin del contrato (vac\u00edo = indefinido)"
+    },
+    "contract_file_url": {
+      "type": "string",
+      "description": "URL del archivo de contrato PDF"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "activo",
+        "inactivo"
+      ],
+      "default": "activo",
+      "description": "Estado del inquilino"
+    }
+  },
+  "required": [
+    "full_name",
+    "family_name"
+  ]
+}

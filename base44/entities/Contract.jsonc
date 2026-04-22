@@ -1,0 +1,52 @@
+{
+  "name": "Contract",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "description": "ID del inquilino vinculado"
+    },
+    "tenant_name": {
+      "type": "string",
+      "description": "Nombre del inquilino"
+    },
+    "unit_number": {
+      "type": "number",
+      "description": "N\u00famero de unidad"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha de inicio"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha de fin"
+    },
+    "monthly_amount": {
+      "type": "number",
+      "description": "Monto mensual acordado"
+    },
+    "file_url": {
+      "type": "string",
+      "description": "URL del archivo PDF"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "vigente",
+        "vencido",
+        "rescindido"
+      ],
+      "default": "vigente",
+      "description": "Estado del contrato"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "start_date",
+    "end_date",
+    "monthly_amount"
+  ]
+}

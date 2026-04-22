@@ -1,0 +1,55 @@
+{
+  "name": "Payment",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "description": "ID del inquilino"
+    },
+    "tenant_name": {
+      "type": "string",
+      "description": "Nombre del inquilino"
+    },
+    "unit_number": {
+      "type": "number",
+      "description": "N\u00famero de unidad"
+    },
+    "month": {
+      "type": "number",
+      "description": "Mes correspondiente (1-12)"
+    },
+    "year": {
+      "type": "number",
+      "description": "A\u00f1o correspondiente"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Monto del pago"
+    },
+    "payment_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha en que se realiz\u00f3 el pago"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Pendiente",
+        "Pagado",
+        "Atrasado"
+      ],
+      "default": "Pendiente",
+      "description": "Estado del pago"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Observaciones opcionales"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "month",
+    "year",
+    "amount"
+  ]
+}

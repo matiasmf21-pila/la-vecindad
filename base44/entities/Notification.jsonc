@@ -1,0 +1,46 @@
+{
+  "name": "Notification",
+  "type": "object",
+  "properties": {
+    "tenant_id": {
+      "type": "string",
+      "description": "ID del destinatario (vac\u00edo = todos)"
+    },
+    "tenant_name": {
+      "type": "string",
+      "description": "Nombre del destinatario"
+    },
+    "message": {
+      "type": "string",
+      "description": "Contenido del mensaje"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "recordatorio_pago",
+        "aviso_general",
+        "alerta_deuda"
+      ],
+      "description": "Tipo de notificaci\u00f3n"
+    },
+    "send_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Fecha de env\u00edo"
+    },
+    "is_read": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si fue le\u00edda"
+    },
+    "for_all": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si es para todos los inquilinos"
+    }
+  },
+  "required": [
+    "message",
+    "type"
+  ]
+}
